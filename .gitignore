@@ -9,6 +9,7 @@ __pycache__/
 .Python
 env/
 .env
+Ilkhom/.env
 build/
 develop-eggs/
 dist/
