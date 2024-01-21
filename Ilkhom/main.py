@@ -50,7 +50,7 @@ def get_age_info(message):
     chat_id = message.chat.id
     age = message.text
     if not age.isdigit():
-        echo = bot.reply_to(message, text='Age should be a number. How old are you?' )
+        echo = bot.reply_to(message, text='Age should be a number. How old are you?')
         bot.register_next_step_handler(echo, get_age_info)
         return
 
@@ -69,8 +69,7 @@ def get_sex_info(message):
     user.sex = sex
     bot.send_message(chat_id, f"Nice to meet you {user.name}\n Age: {user.age} \n Sex: {user.sex}👍")
     check_id = db.check_user_id(chat_id)
-
-    # print(check_id)
+    print(check_id)
 
     if db.check_user_id(chat_id):
         user_name = user.name
