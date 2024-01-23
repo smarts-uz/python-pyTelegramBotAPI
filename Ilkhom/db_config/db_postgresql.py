@@ -28,16 +28,26 @@ class Database:
             user_id SERIAL PRIMARY KEY UNIQUE NOT NULL,
             user_name VARCHAR (50) NOT NULL,
             user_age VARCHAR (10) NOT NULL,
-            user_sex VARCHAR (20) NOT NULL
+            user_sex VARCHAR (20) NOT NULL,
+            photo_name VARCHAR (50),
+            photo_data BYTEA
             )"""
         self.execute(sql, commit=True)
 
-    def insert_user(self, user_id, user_name, user_age, user_sex):
+    def insert_user(self, user_id, user_name, user_age, user_sex, photo_name, photo_data):
+
         sql = """
-        INSERT INTO user_info(user_id, user_name, user_age, user_sex)
-        VALUES(%s, %s, %s, %s)
+        INSERT INTO user_info(user_id, user_name, user_age, user_sex, photo_name, photo_data)
+        VALUES(%s, %s, %s, %s, %s, %s)
         """
-        self.execute(sql, user_id, user_name, user_age, user_sex, commit=True)
+        self.execute(sql, user_id, user_name, user_age, user_sex, photo_name, photo_data, commit=True)
+
+    def update_user_data(self, user_id, photo_name, photo_data):
+        sql = """
+                UPDATE user_info SET photo_name, photo_data
+                WHERE user_id = %s
+                """
+        self.execute(sql, user_id, photo_name, photo_data, commit=True)
 
     def check_user_id(self, user_id):
         sql = """

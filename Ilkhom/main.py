@@ -1,3 +1,6 @@
+import psycopg2
+
+
 import telebot, logging
 from Ilkhom.keyboards.inline.inline_menu import menu_btn, types_btn
 from Ilkhom.utils.util import content_type_media
@@ -69,13 +72,18 @@ def get_sex_info(message):
     user.sex = sex
     bot.send_message(chat_id, f"Nice to meet you {user.name}\n Age: {user.age} \n Sex: {user.sex}👍")
     check_id = db.check_user_id(chat_id)
-    print(check_id)
+    # print(check_id)
 
     if db.check_user_id(chat_id):
         user_name = user.name
         user_age = user.age
         user_sex = user.sex
-        db.insert_user(chat_id, user_name, user_age, user_sex)
+        # db.insert_user(chat_id, user_name, user_age, user_sex)
+        photo_name = 'Ilkhom_first'
+        test =  open('D:\\photo_2024-01-22_20-25-54.jpg', 'rb').read()
+        photo_data = psycopg2.Binary(test)
+        # db.update_user_data(chat_id, photo_name, photo_data)
+        db.insert_user(chat_id, user_name, user_age, user_sex, photo_name, photo_data)
 
 
 @bot.message_handler(content_types=content_type_media)
