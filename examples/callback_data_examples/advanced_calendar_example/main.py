@@ -11,7 +11,7 @@ from examples.callback_data_examples.advanced_calendar_example.keyboards import 
 from filters import calendar_factory, calendar_zoom, bind_filters
 from telebot import types, TeleBot
 
-API_TOKEN = ''
+# API_TOKEN = '6939764095:AAFpWGGBGm6KETmLOHRpKdqcYuyfDQz4l_A'
 bot = TeleBot(API_TOKEN)
 
 
@@ -25,14 +25,19 @@ def start_command_handler(message: types.Message):
 @bot.message_handler(commands='calendar')
 def calendar_command_handler(message: types.Message):
     now = date.today()
+    print(now, 'bugungi kun')
     bot.send_message(message.chat.id, 'Calendar', reply_markup=generate_calendar_days(year=now.year, month=now.month))
 
 
 @bot.callback_query_handler(func=None, calendar_config=calendar_factory.filter())
 def calendar_action_handler(call: types.CallbackQuery):
     callback_data: dict = calendar_factory.parse(callback_data=call.data)
-    year, month = int(callback_data['year']), int(callback_data['month'])
 
+    year, month = int(callback_data['year']), int(callback_data['month'])
+    print(callback_data, 'call-1')
+    print(call.data)
+    print(year, month)
+    print('mana!!!!!!!!!!!!!!!!!!!!!!!!!!!1')
     bot.edit_message_reply_markup(call.message.chat.id, call.message.id,
                                   reply_markup=generate_calendar_days(year=year, month=month))
 
@@ -41,6 +46,10 @@ def calendar_action_handler(call: types.CallbackQuery):
 def calendar_zoom_out_handler(call: types.CallbackQuery):
     callback_data: dict = calendar_zoom.parse(callback_data=call.data)
     year = int(callback_data.get('year'))
+
+    print(callback_data, 'call-2')
+    print(call.data)
+    print(year)
 
     bot.edit_message_reply_markup(call.message.chat.id, call.message.id,
                                   reply_markup=generate_calendar_months(year=year))

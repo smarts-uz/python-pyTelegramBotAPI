@@ -7,7 +7,7 @@ from telebot.callback_data import CallbackData, CallbackDataFilter
 from telebot import types, TeleBot
 from telebot.custom_filters import AdvancedCustomFilter
 
-API_TOKEN = ''
+# API_TOKEN = '6939764095:AAFpWGGBGm6KETmLOHRpKdqcYuyfDQz4l_A'
 PRODUCTS = [
     {'id': '0', 'name': 'xiaomi mi 10', 'price': 400},
     {'id': '1', 'name': 'samsung s20', 'price': 800},
@@ -15,7 +15,7 @@ PRODUCTS = [
 ]
 
 bot = TeleBot(API_TOKEN)
-products_factory = CallbackData('product_id', prefix='products')
+products_factory = CallbackData('product_ilkhom', prefix='ilkhom')
 
 
 def products_keyboard():
@@ -24,7 +24,7 @@ def products_keyboard():
             [
                 types.InlineKeyboardButton(
                     text=product['name'],
-                    callback_data=products_factory.new(product_id=product["id"])
+                    callback_data=products_factory.new(product_ilkhom=product["id"])
                 )
             ]
             for product in PRODUCTS
@@ -58,18 +58,21 @@ def products_command_handler(message: types.Message):
 
 
 # Only product with field - product_id = 2
-@bot.callback_query_handler(func=None, config=products_factory.filter(product_id='2'))
-def product_one_callback(call: types.CallbackQuery):
-    bot.answer_callback_query(callback_query_id=call.id, text='Not available :(', show_alert=True)
+# @bot.callback_query_handler(func=None, config=products_factory.filter(product_id='2'))
+# def product_one_callback(call: types.CallbackQuery):
+#     bot.answer_callback_query(callback_query_id=call.id, text='Not available :(', show_alert=True)
 
 
 # Any other products
 @bot.callback_query_handler(func=None, config=products_factory.filter())
 def products_callback(call: types.CallbackQuery):
     callback_data: dict = products_factory.parse(callback_data=call.data)
-    product_id = int(callback_data['product_id'])
+    product_id = int(callback_data['product_ilkhom'])
     product = PRODUCTS[product_id]
-
+    print(call.data)
+    print(callback_data)
+    print(product_id)
+    print(product)
     text = f"Product name: {product['name']}\n" \
            f"Product price: {product['price']}"
     bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,

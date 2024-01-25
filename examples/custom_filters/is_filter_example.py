@@ -1,7 +1,7 @@
 import telebot
 from telebot import custom_filters
 
-bot = telebot.TeleBot('TOKEN')
+bot = telebot.TeleBot('')
 
 
 # Check if message is a reply
