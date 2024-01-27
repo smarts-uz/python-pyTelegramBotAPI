@@ -9,13 +9,15 @@ import telebot
 import json
 import os
 
-API_TOKEN = os.environ['TELEGRAM_TOKEN']
+
+
+# API_TOKEN = os.environ['TELEGRAM_TOKEN']
 
 
 logger = telebot.logger
 telebot.logger.setLevel(logging.INFO)
 
-bot = telebot.TeleBot(API_TOKEN, threaded=False)
+bot = telebot.TeleBot('6939764095:AAFpWGGBGm6KETmLOHRpKdqcYuyfDQz4l_A', threaded=False)
 
 
 def process_event(event):

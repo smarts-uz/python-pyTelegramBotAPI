@@ -38,7 +38,7 @@ def get_or_create_session(user_id):
         return SESSIONS[user_id]
 
 
-bot = telebot.TeleBot('TOKEN')
+bot = telebot.TeleBot('')
 
 
 @bot.middleware_handler(update_types=['message'])

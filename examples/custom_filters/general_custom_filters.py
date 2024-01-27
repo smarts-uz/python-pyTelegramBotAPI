@@ -1,6 +1,6 @@
 import telebot
 
-bot = telebot.TeleBot('TOKEN')
+bot = telebot.TeleBot('')
 
 
 # AdvancedCustomFilter is for list, string filter values
@@ -15,7 +15,7 @@ class IsAdmin(telebot.custom_filters.SimpleCustomFilter):
     key='is_admin'
     @staticmethod
     def check(message: telebot.types.Message):
-        return bot.get_chat_member(message.chat.id,message.from_user.id).status in ['administrator','creator']
+        return bot.get_chat_member(message.chat.id, message.from_user.id).status in ['administrator','creator']
 
 
 @bot.message_handler(is_admin=True, commands=['admin']) # Check if user is admin
@@ -25,6 +25,7 @@ def admin_rep(message):
 @bot.message_handler(is_admin=False, commands=['admin']) # If user is not admin
 def not_admin(message):
     bot.send_message(message.chat.id, "You are not admin")
+
 
 @bot.message_handler(text=['hi']) # Response to hi message
 def welcome_hi(message):
